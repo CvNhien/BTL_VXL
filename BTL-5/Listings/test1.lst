@@ -1,0 +1,307 @@
+A51 MACRO ASSEMBLER  TEST1                                                                06/12/2022 13:45:12 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\test1.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE test1.asm SET(SMALL) DEBUG PRINT(.\Listings\test1.lst) OBJECT(.\Objects
+                      \test1.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+  00B1                 1                     LCD_E   BIT P3.1
+  00B0                 2                     LCD_RS  BIT P3.0
+  00B3                 3                     START   BIT     P3.3
+  00B2                 4                     ALE             BIT     P3.2
+                       5     
+2000                   6                     ORG     2000H   
+2000 1197              7                     ACALL   CLEAR            
+2002 119C              8                     ACALL   INIT_LCD         
+                       9     
+2004 7480             10                     MOV     A,#80H
+2006 11B5             11                     ACALL   WRITECOM
+2008 11C0             12                     ACALL   DISPLAYSTRING1   
+                      13                     
+200A 74C0             14                     MOV     A,#0C0H
+200C 11B5             15                     ACALL   WRITECOM
+200E 11D1             16                     ACALL   DISPLAYSTRING2   
+                      17             
+2010 1123             18     MAIN:   ACALL   NHAP_ADC
+2012 11F9             19                     ACALL   XAC_DINH_GIA_TIEN
+2014 1134             20                     ACALL   BCD
+2016 1147             21                     ACALL   DISPLAY_KHOILUONG
+2018 11E2             22                     ACALL DELAY
+                      23                     
+201A EC               24                     MOV     A,R4
+201B 1134             25                     ACALL   BCD
+201D 116B             26                     ACALL   DISPLAY_GIATIEN
+201F 11E2             27                     ACALL DELAY
+                      28                     
+2021 80ED             29                     SJMP    MAIN
+                      30                     
+2023                  31     NHAP_ADC:        
+2023 C2B3             32                     CLR     START   
+2025 C2B2             33                     CLR     ALE              
+2027 D2B3             34                     SETB    START
+2029 D2B2             35                     SETB    ALE
+202B C2B3             36                     CLR     START
+202D C2B2             37                     CLR     ALE
+                      38                     
+                      39                     
+202F 11F4             40                     ACALL DELAY_120us
+                      41                     
+2031 E590             42                     MOV     A,P1
+2033 22               43                     RET
+                      44                     
+2034                  45     BCD:     
+2034 C0E0             46                     PUSH    ACC
+2036 75F064           47                     MOV B, #100
+2039 84               48                     DIV AB 
+203A F9               49                     MOV R1,A         
+203B E5F0             50                     MOV A,B
+203D 75F00A           51                     MOV B, #10
+2040 84               52                     DIV AB 
+2041 FA               53                     MOV R2, A        
+2042 ABF0             54                     MOV R3, B        
+2044 D0E0             55                     POP ACC
+2046 22               56                     RET
+                      57                     
+A51 MACRO ASSEMBLER  TEST1                                                                06/12/2022 13:45:12 PAGE     2
+
+2047                  58     DISPLAY_KHOILUONG:
+2047 748C             59                     MOV A,#8CH
+2049 11B5             60                     ACALL WRITECOM
+204B E9               61                     MOV A,R1 
+204C 2430             62                     ADD A,#30H
+204E 11AA             63                     ACALL WRITETEXT
+                      64                                     
+2050 748D             65                     MOV A,#8DH
+2052 11B5             66                     ACALL WRITECOM
+2054 742E             67                     MOV A,#'.'
+2056 11AA             68                     ACALL WRITETEXT
+                      69                     
+2058 748E             70                     MOV A,#8EH
+205A 11B5             71                     ACALL WRITECOM
+205C EA               72                     MOV A, R2
+205D 2430             73                     ADD A, #30H
+205F 11AA             74                     ACALL WRITETEXT
+                      75                     
+2061 748F             76                     MOV A, #8FH
+2063 11B5             77                     ACALL WRITECOM
+2065 EB               78                     MOV A,R3
+2066 2430             79                     ADD A,#30H
+2068 11AA             80                     ACALL WRITETEXT
+206A 22               81                     RET
+                      82             
+206B                  83     DISPLAY_GIATIEN:
+206B 74CA             84                     MOV A,#0CAH
+206D 11B5             85                     ACALL WRITECOM
+206F E9               86                     MOV A,R1
+2070 2430             87                     ADD A,#30H
+2072 11AA             88                     ACALL WRITETEXT
+                      89                     
+2074 74CB             90                     MOV A,#0CBH
+2076 11B5             91                     ACALL WRITECOM
+2078 EA               92                     MOV A, R2
+2079 2430             93                     ADD A, #30H
+207B 11AA             94                     ACALL WRITETEXT
+                      95                     
+207D 74CC             96                     MOV A, #0CCH
+207F 11B5             97                     ACALL WRITECOM
+2081 742E             98                     MOV A,#'.'
+2083 11AA             99                     ACALL WRITETEXT
+                     100                     
+2085 74CD            101                     MOV A, #0CDH
+2087 11B5            102                     ACALL WRITECOM
+2089 EB              103                     MOV A,R3
+208A 2430            104                     ADD A,#30H
+208C 11AA            105                     ACALL WRITETEXT
+                     106                     
+208E 74CF            107                     MOV A, #0CFH
+2090 11B5            108                     ACALL WRITECOM
+2092 7424            109                     MOV A,#'$'
+2094 11AA            110                     ACALL WRITETEXT
+                     111                     
+2096 22              112                     RET     
+2097                 113     CLEAR:
+2097 7401            114                     MOV A, #01H
+2099 11B5            115                     ACALL WRITECOM
+209B 22              116                     RET
+                     117                     
+209C                 118     INIT_LCD:
+209C 7438            119                     MOV A,#38H
+209E 11B5            120                     ACALL WRITECOM
+20A0 740E            121                     MOV A,#0EH
+20A2 11B5            122                     ACALL WRITECOM
+20A4 7406            123                     MOV A,#06H
+A51 MACRO ASSEMBLER  TEST1                                                                06/12/2022 13:45:12 PAGE     3
+
+20A6 1220B5          124                     LCALL WRITECOM
+20A9 22              125                     RET             
+                     126                     
+20AA                 127     WRITETEXT:       
+20AA D2B1            128                     SETB LCD_E
+20AC D2B0            129                     SETB LCD_RS
+20AE F580            130                     MOV     P0,A     
+20B0 C2B1            131                     CLR     LCD_E
+20B2 11EB            132                     ACALL   WAIT_LCD
+20B4 22              133                     RET     
+                     134                     
+20B5                 135     WRITECOM:        
+20B5 D2B1            136                     SETB LCD_E
+20B7 C2B0            137                     CLR     LCD_RS
+20B9 F580            138                     MOV     P0,A     
+20BB C2B1            139                     CLR     LCD_E
+20BD 11EB            140                     ACALL WAIT_LCD
+20BF 22              141                     RET
+                     142                     
+20C0                 143     DISPLAYSTRING1:
+20C0 7400            144                     MOV A,#0        
+20C2                 145             LOOP:
+20C2 902129          146                     MOV DPTR,#MESSAGE1
+20C5 F8              147                     MOV     R0,A
+20C6 93              148                     MOVC    A,@A+DPTR
+20C7 6007            149                     JZ      EXIT
+20C9 11AA            150                     ACALL   WRITETEXT       
+20CB E8              151                     MOV     A,R0
+20CC 04              152                     INC     A
+20CD D5F0F2          153                     DJNZ    B,LOOP  
+20D0                 154             EXIT:
+20D0 22              155                     RET     
+                     156             
+20D1                 157     DISPLAYSTRING2:
+20D1 7400            158                     MOV A,#0
+20D3                 159             LOOP1:
+20D3 902136          160                     MOV DPTR,#MESSAGE2    
+20D6 F8              161                     MOV     R0,A
+20D7 93              162                     MOVC    A,@A+DPTR
+20D8 6007            163                     JZ      EXIT1
+20DA 11AA            164                     ACALL   WRITETEXT
+20DC E8              165                     MOV     A,R0
+20DD 04              166                     INC     A
+20DE D5F0F2          167                     DJNZ    B,LOOP1
+20E1                 168             EXIT1:
+20E1 22              169                     RET
+                     170                     
+20E2                 171     DELAY:
+20E2 7EC8            172                     MOV R6, #200
+20E4 7FFA            173     L1:             MOV R7, #250
+20E6 DFFE            174                     DJNZ R7,$
+20E8 DEFA            175                     DJNZ    R6,L1
+20EA 22              176                     RET
+                     177                     
+20EB                 178     WAIT_LCD: 
+20EB 7E0A            179                     MOV R6,#10
+20ED 7FFA            180     DL1:    MOV R7,#250
+20EF DFFE            181                     DJNZ R7,$
+20F1 DEFA            182                     DJNZ R6, DL1
+20F3 22              183                     RET
+                     184                     
+20F4                 185     DELAY_120us:
+20F4 7F3C            186                     MOV R7,#60
+20F6 DFFE            187                     DJNZ R7,$
+20F8 22              188                     RET             
+                     189                     
+A51 MACRO ASSEMBLER  TEST1                                                                06/12/2022 13:45:12 PAGE     4
+
+20F9                 190     XAC_DINH_GIA_TIEN:       
+20F9 7003            191                     JNZ     MUC0
+20FB 7C00            192                     MOV     R4,#0
+20FD 22              193                     RET
+20FE B46400          194     MUC0:   CJNE    A,#100,$+3               
+2101 5003            195                     JNC     MUC1
+2103 7C64            196                     MOV     R4,#100
+2105 22              197                     RET
+2106 B47800          198     MUC1:   CJNE    A,#120,$+3               
+2109 5003            199                     JNC     MUC2
+210B 7C78            200                     MOV     R4,#120
+210D 22              201                     RET
+210E                 202     MUC2:                                            
+210E B49600          203                     CJNE    A,#150,$+3
+2111 5003            204                     JNC     MUC3
+2113 7C91            205                     MOV     R4,#145
+2115 22              206                     RET
+2116                 207     MUC3:                                            
+2116 B4B400          208                     CJNE    A,#180,$+3
+2119 5003            209                     JNC     MUC4
+211B 7CC8            210                     MOV     R4,#200
+211D 22              211                     RET
+211E                 212     MUC4:                                            
+211E B4DC00          213                     CJNE    A,#220,$+3
+2121 5003            214                     JNC     MUC5
+2123 7CB4            215                     MOV     R4,#180
+2125 22              216                     RET
+2126 7CA5            217     MUC5:   MOV     R4,#165                                  
+2128 22              218                     RET
+                     219                     
+2129                 220     MESSAGE1:
+2129 4B484F49        221                     DB      "KHOI LUONG: ",0                
+212D 204C554F                
+2131 4E473A20                
+2135 00                      
+2136                 222     MESSAGE2:
+2136 47494120        223                     DB      "GIA TIEN: ",0
+213A 5449454E                
+213E 3A2000                  
+                     224                             
+                     225     END             
+                                             
+                                             
+                                                     
+                                     
+                                     
+                                     
+                                     
+                                     
+                                     
+A51 MACRO ASSEMBLER  TEST1                                                                06/12/2022 13:45:12 PAGE     5
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+ACC. . . . . . . .  D ADDR   00E0H   A   
+ALE. . . . . . . .  B ADDR   00B0H.2 A   
+B. . . . . . . . .  D ADDR   00F0H   A   
+BCD. . . . . . . .  C ADDR   2034H   A   
+CLEAR. . . . . . .  C ADDR   2097H   A   
+DELAY. . . . . . .  C ADDR   20E2H   A   
+DELAY_120US. . . .  C ADDR   20F4H   A   
+DISPLAYSTRING1 . .  C ADDR   20C0H   A   
+DISPLAYSTRING2 . .  C ADDR   20D1H   A   
+DISPLAY_GIATIEN. .  C ADDR   206BH   A   
+DISPLAY_KHOILUONG.  C ADDR   2047H   A   
+DL1. . . . . . . .  C ADDR   20EDH   A   
+EXIT . . . . . . .  C ADDR   20D0H   A   
+EXIT1. . . . . . .  C ADDR   20E1H   A   
+INIT_LCD . . . . .  C ADDR   209CH   A   
+L1 . . . . . . . .  C ADDR   20E4H   A   
+LCD_E. . . . . . .  B ADDR   00B0H.1 A   
+LCD_RS . . . . . .  B ADDR   00B0H.0 A   
+LOOP . . . . . . .  C ADDR   20C2H   A   
+LOOP1. . . . . . .  C ADDR   20D3H   A   
+MAIN . . . . . . .  C ADDR   2010H   A   
+MESSAGE1 . . . . .  C ADDR   2129H   A   
+MESSAGE2 . . . . .  C ADDR   2136H   A   
+MUC0 . . . . . . .  C ADDR   20FEH   A   
+MUC1 . . . . . . .  C ADDR   2106H   A   
+MUC2 . . . . . . .  C ADDR   210EH   A   
+MUC3 . . . . . . .  C ADDR   2116H   A   
+MUC4 . . . . . . .  C ADDR   211EH   A   
+MUC5 . . . . . . .  C ADDR   2126H   A   
+NHAP_ADC . . . . .  C ADDR   2023H   A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+P3 . . . . . . . .  D ADDR   00B0H   A   
+START. . . . . . .  B ADDR   00B0H.3 A   
+WAIT_LCD . . . . .  C ADDR   20EBH   A   
+WRITECOM . . . . .  C ADDR   20B5H   A   
+WRITETEXT. . . . .  C ADDR   20AAH   A   
+XAC_DINH_GIA_TIEN.  C ADDR   20F9H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
