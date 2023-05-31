@@ -17,5 +17,8 @@ Thiết kế hardware:
 
 Clip mô phỏng:
 
-![image](https://github.com/CvNhien/BTL_VXL/assets/111190445/8aa01952-5e77-4541-92db-9811e497f5a9)
+![image](https://github.com/CvNhien/BTL_VXL/assets/111190445/64e62810-bf82-4f3f-ba4e-8e9e39450a57)
+
+![image](https://github.com/CvNhien/BTL_VXL/assets/111190445/3217daf7-69dc-4e7b-87f8-64309dc7cea3)
+
 
